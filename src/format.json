@@ -1,0 +1,84 @@
+{
+    "path": "/getUser",
+    "method": "GET",
+    "description": "Retrieve user information by UUID.",
+    "request": {
+      "params": {
+        "uuid": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "headers": {
+        "Authorization": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "response": {
+      "fields": {
+        "username": "string",
+        "email": "string",
+        "lastLogin": "datetime"
+      },
+      "errorHandling": {
+        "404": "User not found",
+        "401": "Unauthorized access",
+        "500": "Internal server error"
+      }
+    },
+    "database": {
+      "connection": "MyDatabase",
+      "operation": "SELECT",
+      "query": {
+        "type": "SQL",
+        "statement": "SELECT username, email, lastLogin FROM users WHERE id = :uuid"
+        
+      }
+    },
+    "plugins": [
+      {
+        "name": "checkAuth",
+        "trigger": "beforeRequest", 
+        "script": "plugins/checkAuth.js"
+      },
+      {
+        "name": "logRequest",
+        "trigger": "beforeRequest",
+        "script": "plugins/logRequest.js"
+      },
+      {
+        "name": "parrallelRequest",
+        "trigger": "passThrough",
+        "data": "headers", 
+        "script": "plugins/parrallelRequest.js"
+      }
+    ],
+    "auth": {
+      "type": "APIKey", 
+      "roles": ["admin", "user"] 
+    },
+    "logging": {
+      "plugins": ["logRequest"],
+      "enabled": true,
+      "type": "File", 
+        "path": "/var/log/myapp.log", 
+        "connection": "MyLog", 
+      "level": "info"
+
+    },
+    "cache": {
+      "enabled": true,
+      "type": "Database", 
+      "connection": "MyCache",
+      "ttl": 300
+    },
+    "rateLimit": {
+      "limit": 100,
+      "timeWindow": 3600
+    },
+    "tags": ["user", "read"],
+    "version": "v1.0"
+  }
+  
