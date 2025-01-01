@@ -1,0 +1,65 @@
+{
+    "name": "MyFirstSQLiteConnection",
+    "description": "This is my first SQLite connection",
+    "type": "sqlite",
+    "tags": ["sqlite", "connection"],
+    "options": {
+      // Path to the SQLite database file. If the file does not exist, it will be created.
+      "filePath": "./mydatabase.db",
+      "inMemory": false,
+      // If "inMemory" is true, some libraries may ignore "filePath" and use an in-memory DB.
+  
+      // Connection options
+      "readOnly": false,
+      // If set to true, the database connection should open in read-only mode.
+  
+      // Timeouts (in milliseconds)
+      "busyTimeout": 5000,
+      // Time that a connection will wait for a lock to clear before throwing an error.
+  
+      // Extended configurations
+      "foreignKeysEnabled": true,
+      // Whether foreign key enforcement is enabled (SQLite 3.6.19+ supports this).
+  
+      // Table info and restrictions (similar to our previous SQL definitions)
+      "table": {
+        "count": 2,
+        "restrictions": {
+          "active": true,
+          // If "active" is true, only the listed tables are accessible trying to access any other table will throw an error
+          "tables": ["users", "roles"]
+        },
+        "tables": [
+          {
+            "name": "users",
+            "columns": {
+              "username": "string",
+              "email": "string",
+              "lastLogin": "datetime"
+            },
+            "primaryKey": "username",
+            "foreignKeys": [
+              {
+                "name": "fk_user_roles",
+                "table": "roles",
+                "column": "roleName", 
+                // This indicates users.roleName references roles.roleName (example usage)
+                "onDelete": "CASCADE",
+                "onUpdate": "CASCADE"
+              }
+            ]
+          },
+          {
+            "name": "roles",
+            "columns": {
+              "roleName": "string",
+              "description": "string"
+            },
+            "primaryKey": "roleName",
+            "foreignKeys": []
+          }
+        ]
+      }
+    }
+  }
+  

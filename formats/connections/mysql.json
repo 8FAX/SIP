@@ -1,0 +1,67 @@
+{
+    "name": "MyFirstConnection",
+    "description": "This is my first connection",
+    "type": "mysql",
+    "tags": ["mysql", "connection"],
+    "options": {
+
+      "host": "localhost",
+      "port": 3306,
+      "user": "root",
+      "password": "password",
+      "database": "mydatabase",
+      "connectionLimit": 10,
+      "connectTimeout": 10000,
+      "maxIdleTime": 30000,
+
+      "ssl": {
+        "sslMode": "require",  // sslMode can be "disable", "require", "verify-ca", or "verify-full"
+        "ca": "path/to/ca.pem",
+        "cert": "path/to/cert.pem",
+        "key": "path/to/key.pem"
+      },
+
+      "table": {
+        "count": 2, // the number of tables in the database that can be accessed just so that the system can know how many tables to expect
+        "restrictions": {
+          "active": true, // if true, only the tables listed in the "tables" array will be able to be accessed if any other table is accessed an error will be thrown
+          "tables": ["users", "roles"]
+        },
+
+        "tables": [
+          {
+            "name": "users",
+            "columns": {
+              "username": "string",
+              "email": "string",
+              "lastLogin": "datetime"
+            },
+            "primaryKey": "username",
+            "foreignKeys": [
+              {
+                "name": "user_id",
+                "table": "users",
+                "column": "username"
+              }
+            ]
+          },
+          {
+            "name": "roles",
+            "columns": {
+              "role": "string",
+              "description": "string"
+            },
+            "primaryKey": "role",
+            "foreignKeys": [
+              {
+                "name": "role_id",
+                "table": "roles",
+                "column": "role"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

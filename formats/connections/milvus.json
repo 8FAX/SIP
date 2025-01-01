@@ -1,0 +1,90 @@
+{
+    "name": "MyFirstMilvusConnection",
+    "description": "This is my first Milvus vector DB connection",
+    "type": "milvus",
+    "tags": ["milvus", "connection"],
+    "options": {
+      "host": "localhost",
+      "port": 19530,
+      "user": "myUser",
+      "password": "myPassword",
+
+      // SSL/TLS settings (if using a secure connection)
+      "ssl": {
+        "active": false,
+        "ca": "path/to/ca.pem",
+        "cert": "path/to/cert.pem",
+        "key": "path/to/key.pem"
+      },
+  
+      // Connection management
+      "connectTimeout": 10000, 
+      "readOnly": false,         
+  
+      // Collections analogous to “tables” in relational DBs
+      "collections": {
+        "count": 2,
+        // If "active" is true, only the named collections below can be accessed
+        "restrictions": {
+          "active": true,
+          "collections": ["user_embeddings", "product_embeddings"]
+        },
+        "collections": [
+          {
+            "name": "user_embeddings",
+            "description": "Storage of user embedding vectors",
+            // Common Milvus fields for vector-related schemas
+            "dimension": 128,
+            "metricType": "COSINE",
+            // Could be "L2", "IP", or "COSINE", depending on your similarity measure
+            "indexType": "IVF_FLAT",
+            // Other index types include IVF_PQ, HNSW, RHNSW_FLAT, etc.
+            "indexParams": {
+              "nlist": 1024
+            },
+            "fields": [
+              {
+                "name": "user_id",
+                "type": "INT64",
+                "isPrimaryKey": true,
+                "autoID": false
+              },
+              {
+                "name": "embedding",
+                "type": "FLOAT_VECTOR"
+              },
+              {
+                "name": "timestamp",
+                "type": "INT64"
+              }
+            ]
+          },
+          {
+            "name": "product_embeddings",
+            "description": "Storage of product embedding vectors",
+            "dimension": 512,
+            "metricType": "IP", // Inner Product
+            "indexType": "IVF_PQ",
+            "indexParams": {
+              "nlist": 2048,
+              "m": 8
+              // "m" is required by IVF_PQ to specify how many segments each vector is divided into
+            },
+            "fields": [
+              {
+                "name": "product_id",
+                "type": "INT64",
+                "isPrimaryKey": true,
+                "autoID": false
+              },
+              {
+                "name": "embedding",
+                "type": "FLOAT_VECTOR"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

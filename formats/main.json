@@ -1,0 +1,84 @@
+{
+    "path": "/getUser",
+    "method": "GET",
+    "description": "Retrieve user information by UUID.",
+    "request": {
+      "params": {
+        "uuid": {
+          "type": "string",
+          "required": true
+        }
+      },
+      "headers": {
+        "Authorization": {
+          "type": "string",
+          "required": true
+        }
+      }
+    },
+    "response": {
+      "fields": {
+        "username": "string",
+        "email": "string",
+        "lastLogin": "datetime"
+      },
+      "errorHandling": {
+        "404": "User not found",
+        "401": "Unauthorized access",
+        "500": "Internal server error"
+      }
+    },
+    "database": {
+      "connection": "MyDatabase",
+      "operation": "SELECT",
+      "query": {
+        "type": "SQL", // or "NoSQL" or "GraphQL" or "REST"
+        "statement": "SELECT username, email, lastLogin FROM users WHERE id = :uuid"
+        
+      }
+    },
+    "plugins": [
+      {
+        "name": "checkAuth",
+        "trigger": "beforeRequest", // or "afterRequest" or "passThrough" or "onError"
+        "script": "plugins/checkAuth.js"
+      },
+      {
+        "name": "logRequest",
+        "trigger": "beforeRequest",
+        "script": "plugins/logRequest.js"
+      },
+      {
+        "name": "parrallelRequest",
+        "trigger": "passThrough",
+        "data": "headers", // or "body" or response to discibe the data that will be passed to the plugin
+        "script": "plugins/parrallelRequest.js"
+      }
+    ],
+    "auth": {
+      "type": "APIKey", // none, APIKey, OAuth2
+      "roles": ["admin", "user"] // roles that can access this endpoint 
+    },
+    "logging": {
+      "plugins": ["logRequest"],
+      "enabled": true,
+      "type": "File", // or "Database" or "Console"
+        "path": "/var/log/myapp.log", // can be a path or none
+        "connection": "MyLog", // can be a connection name or none
+      "level": "info"
+
+    },
+    "cache": {
+      "enabled": true,
+      "type": "Database", // or "Memory" or "File" or "Database"
+      "connection": "MyCache",
+      "ttl": 300
+    },
+    "rateLimit": {
+      "limit": 100,
+      "timeWindow": 3600
+    },
+    "tags": ["user", "read"],
+    "version": "v1.0"
+  }
+  

@@ -1,0 +1,74 @@
+// this will also be compliant with the KeyDB 
+
+{
+    "name": "MyFirstRedisConnection",
+    "description": "This is my first Redis connection",
+    "type": "redis",
+    "tags": ["redis", "connection"],
+    "options": {
+      // Basic Redis connection settings
+      "host": "localhost",
+      "port": 6379,
+      "password": "mypassword",
+      // "user" is optional, used when ACLs are enabled on Redis 6.0+
+      "user": "default",
+      "db": 0,
+  
+      // SSL/TLS settings
+      "ssl": {
+        "active": false,
+        "ca": "path/to/ca.pem",
+        "cert": "path/to/cert.pem",
+        "key": "path/to/key.pem"
+      },
+  
+      // Cluster mode configuration
+      "cluster": {
+        "active": false,
+        "nodes": [
+          { "host": "localhost", "port": 7000 },
+          { "host": "localhost", "port": 7001 },
+          { "host": "localhost", "port": 7002 }
+        ],
+        "options": {
+          // Some cluster settings you might include:
+          "scaleReads": "all",
+          // Possible values: "master", "slave", "all"
+          "slotsRefreshInterval": 2000
+        }
+      },
+  
+      // Sentinel configuration
+      "sentinel": {
+        "active": false,
+        "masterName": "mymaster",
+        "sentinels": [
+          { "host": "localhost", "port": 26379 },
+          { "host": "localhost", "port": 26380 }
+        ],
+        "password": "mypassword"
+        // If using separate auth for Sentinels or no auth, adjust accordingly
+      },
+  
+      // Connection management
+      "connectionTimeout": 10000,      // in milliseconds
+      "maxRetriesPerRequest": 3,
+      // Customizable retry strategy (simplified)
+      "retryStrategy": {
+        // Wait time before reconnect attempt (in ms)
+        "initialDelay": 1000,
+        // Multiply wait time by this factor after each failed reconnect
+        "multiplier": 1.5
+      },
+  
+      // Keyspace restrictions: optionally limit which keys/patterns can be accessed
+      "keyspace": {
+        "restrictions": {
+          "active": true,
+          // Any key not matching these patterns would cause an error if "active" is true
+          "keys": ["session:*", "user:*", "cache:*"]
+        }
+      }
+    }
+  }
+  

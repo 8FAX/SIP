@@ -1,0 +1,99 @@
+{
+    "name": "MyFirstMongoConnection",
+    "description": "This is my first MongoDB connection",
+    "type": "mongodb",
+    "tags": ["mongodb", "connection"],
+    "options": {
+      // Either use a single connectionString OR define host/port/user/etc. individually.
+      // If both exist, the codegen can decide which takes precedence.
+      "connectionString": "mongodb://localhost:27017/mydatabase?authSource=admin",
+  
+      "host": "localhost",
+      "port": 27017,
+      "user": "root",
+      "password": "password",
+      "database": "mydatabase",
+      "authSource": "admin",
+      "authMechanism": "SCRAM-SHA-256", // Possible values: SCRAM-SHA-1, SCRAM-SHA-256, MONGODB-X509, GSSAPI, etc.
+  
+      // Replica set configuration
+      "replicaSet": {
+        "active": false,
+        "name": "myReplicaSet"
+      },
+  
+      "ssl": {
+        "sslMode": "require",  // sslMode can be "disable", "require", "verify-ca", or "verify-full"
+        "ca": "path/to/ca.pem",
+        "cert": "path/to/cert.pem",
+        "key": "path/to/key.pem"
+      },
+  
+      "poolSize": 10,
+      "connectTimeoutMS": 10000,
+      "socketTimeoutMS": 30000,
+      "maxIdleTimeMS": 30000,
+  
+      // Read/Write concerns
+      "readPreference": "primary",
+      // Possible values: primary, primaryPreferred, secondary, secondaryPreferred, nearest
+  
+      "readConcern": "local",
+      // Possible values: local, majority, linearizable, available
+  
+      "writeConcern": {
+        "w": "majority",
+        "j": true,
+        "wtimeoutMS": 5000
+      },
+  
+      // Other optional client settings
+      "retryWrites": true,
+      "retryReads": true,
+      "appName": "MyMongoApp",
+  
+      // Collection-level definitions and restrictions (analogous to "table" in SQL databases)
+      "collection": {
+        "count": 2,
+        "restrictions": {
+          "active": true,
+          // Only these collections will be permitted if "active" is set to true
+          "collections": ["users", "roles"]
+        },
+        "collections": [
+          {
+            "name": "users",
+            // define field types for documentation purposes.
+            // MongoDB is schemaless, but a code generator can still reference these definitions.
+            "fields": {
+              "username": "string",
+              "email": "string",
+              "lastLogin": "datetime"
+            },
+            "indexes": [
+              {
+                "name": "username_index",
+                "fields": { "username": 1 },
+                "unique": true
+              }
+            ]
+          },
+          {
+            "name": "roles",
+            "fields": {
+              "role": "string",
+              "description": "string"
+            },
+            "indexes": [
+              {
+                "name": "role_index",
+                "fields": { "role": 1 },
+                "unique": true
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

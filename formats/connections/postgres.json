@@ -1,0 +1,63 @@
+{
+    "name": "MyFirstPgConnection",
+    "description": "This is my first Postgres connection",
+    "type": "postgres",
+    "tags": ["postgres", "connection"],
+    "options": {
+      "host": "localhost",
+      "port": 5432,
+      "user": "postgres",
+      "password": "password",
+      "database": "mydatabase",
+      "connectionLimit": 10,
+      "connectTimeout": 10000,
+      "maxIdleTime": 30000,
+      "ssl": {
+        "sslMode": "require",  // sslMode can be "disable", "require", "verify-ca", or "verify-full"
+        "ca": "path/to/ca.pem",
+        "cert": "path/to/cert.pem",
+        "key": "path/to/key.pem"
+      },
+      "table": {
+        "count": 2,
+        "restrictions": {
+          "active": true,
+          "tables": ["users", "roles"]
+        },
+        "tables": [
+          {
+            "name": "users",
+            "columns": {
+              "username": "string",
+              "email": "string",
+              "lastLogin": "datetime"
+            },
+            "primaryKey": "username",
+            "foreignKeys": [
+              {
+                "name": "user_id",
+                "table": "users",
+                "column": "username"
+              }
+            ]
+          },
+          {
+            "name": "roles",
+            "columns": {
+              "role": "string",
+              "description": "string"
+            },
+            "primaryKey": "role",
+            "foreignKeys": [
+              {
+                "name": "role_id",
+                "table": "roles",
+                "column": "role"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  

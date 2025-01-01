@@ -1,0 +1,104 @@
+// this is very experimental and subject to change
+// i dont quite like the structure yet
+
+{
+    "name": "MyFirstAPIConnection",
+    "description": "This is my first custom API connection",
+    "type": "api",
+    "tags": ["api", "connection"],
+    "options": {
+      // Base URL for your API
+      "baseUrl": "https://api.example.com",
+  
+      // Optional SSL/TLS settings (if using self-signed certificates, etc.)
+      "ssl": {
+        "active": false,
+        "ca": "path/to/ca.pem",
+        "cert": "path/to/cert.pem",
+        "key": "path/to/key.pem"
+      },
+  
+      // Authentication details
+      "auth": {
+        "type": "apiKey",  
+        // Could be "none", "apiKey", "oauth2", "basic", "bearer", etc.
+        // Depending on your API’s security model.
+  
+        "apiKey": {
+          "key": "YOUR_API_KEY",
+          "headerName": "Authorization"
+        },
+        // If "auth.type" is "basic", you might provide:
+        // "basic": {
+        //   "username": "myuser",
+        //   "password": "mypassword"
+        // }
+        //
+        // Or if "auth.type" is "bearer":
+        // "bearer": {
+        //   "token": "YOUR_BEARER_TOKEN"
+        // }
+  
+        // If using OAuth2, you might define:
+        // "oauth2": {
+        //   "clientId": "abc123",
+        //   "clientSecret": "secretxyz",
+        //   "tokenUrl": "https://oauth2.example.com/token",
+        //   "scopes": ["read", "write"]
+        // }
+      },
+  
+      "timeout": 10000,
+      "retryPolicy": {
+        "maxRetries": 3,
+        "retryDelay": 2000 
+      },
+  
+      // API resources (analogous to "tables" in a DB)
+      // This section defines which endpoints/resources the codegen should handle
+      "resources": {
+        "count": 2,
+        // If you only want to allow access to these resources, set "active" to true
+        // and list them in "resources"
+        "restrictions": {
+          "active": true,
+          "resources": ["orders", "customers"]
+        },
+        "resources": [
+          {
+            "name": "orders",
+            "endpoint": "/v1/orders",
+            // The HTTP methods you want to allow or generate code for
+            "methods": ["GET", "POST", "PATCH"],
+            // Optional query or path parameters the codegen might care about
+            "params": {
+              "query": ["status", "dateRange"],
+              "path": []
+            },
+            // Optional response schema or reference
+            "responseSchema": {
+              "orderId": "number",
+              "items": "array",
+              "total": "number",
+              "status": "string"
+            }
+          },
+          {
+            "name": "customers",
+            "endpoint": "/v1/customers",
+            "methods": ["GET", "POST"],
+            "params": {
+              "query": ["region", "since"],
+              "path": []
+            },
+            "responseSchema": {
+              "customerId": "number",
+              "name": "string",
+              "email": "string"
+            }
+          }
+        ]
+      }
+    }
+  }
+  

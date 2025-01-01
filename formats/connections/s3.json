@@ -1,0 +1,117 @@
+// quick note 
+// this file has bucket level configurations witch will not be needed if the bucket is already created
+// this is to let us be flexible in the future if we want to create buckets on the fly or if we 
+// already have buckets created
+// this alws us to provision buckets for users this can add to the simplicity
+// of the system that is the main reason for this project
+
+
+{
+    "name": "MyFirstS3Connection",
+    "description": "This is my first S3 connection",
+    "type": "s3",
+    "tags": ["s3", "connection"],
+    "options": {
+      // Basic S3 connection info
+      "region": "us-east-1",
+      // Typically "us-east-1", "us-west-2", or none for non-AWS S3-compatible services
+      "endpoint": "https://s3.amazonaws.com",
+      // If using AWS proper, this can remain https://s3.amazonaws.com 
+      // or a region-specific endpoint. 
+      // If you are using a 3rd-party S3-compatible service, specify their endpoint here.
+  
+      // Credentials
+      "accessKeyId": "YOUR_ACCESS_KEY_ID",
+      "secretAccessKey": "YOUR_SECRET_ACCESS_KEY",
+      // Optional: only needed if you’re using temporary credentials or assumeRole
+      "sessionToken": "YOUR_SESSION_TOKEN",
+  
+      // Whether to use path-style access (true) or virtual-hosted style (false)
+      "forcePathStyle": false,
+  
+      // SSL options
+      "ssl": {
+        "active": true,
+        "ca": "path/to/ca.pem"
+      },
+  
+      // Bucket-level configurations
+      "bucketConfig": {
+        "count": 2,
+        // "count" can be used by the codegen to know how many buckets will be listed
+  
+        // Restrict access only to listed buckets when "active" is true
+        "restrictions": {
+          "active": true,
+          "buckets": ["my-bucket", "my-other-bucket"]
+        },
+  
+        "buckets": [
+          {
+            "name": "my-bucket",
+            "versioning": true,
+            // If versioning is enabled, multiple versions of the same object can be retained
+  
+            // Folders (conceptual) or prefix-based paths you might want to keep track of
+            "folders": [
+              {
+                "path": "folder1/",
+                "metadata": {
+                  // Example of some metadata or default S3 object settings
+                  "cacheControl": "max-age=3600",
+                  "acl": "public-read"
+                }
+              },
+              {
+                "path": "folder2/",
+                "metadata": {
+                  "acl": "private"
+                }
+              }
+            ],
+  
+            // Bucket policy or ACL settings (simplified for example)
+            "bucketPolicy": {
+              "readAccess": "public",
+              "writeAccess": "private"
+              // A real policy would be a JSON policy doc, 
+              // but this is a simplified placeholder for codegen logic
+            },
+  
+            // Example for Lifecycle rules, left empty but can be expanded
+            "lifecycleRules": []
+          },
+          {
+            "name": "my-other-bucket",
+            "versioning": false,
+  
+            "folders": [
+              {
+                "path": "anotherFolder/",
+                "metadata": {
+                  // Example: this folder is private by default
+                  "acl": "private"
+                }
+              }
+            ],
+  
+            "bucketPolicy": {
+              // Another simple placeholder for a custom policy
+              "readAccess": "private",
+              "writeAccess": "private"
+            },
+  
+            "lifecycleRules": [
+              {
+                "id": "expire-older-than-90-days",
+                "prefix": "",
+                "status": "Enabled",
+                "expirationInDays": 90
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+  
