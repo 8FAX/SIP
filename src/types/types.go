@@ -37,17 +37,28 @@ type PluginDefinition struct {
 }
 
 type AuthDefinition struct {
-	Type  string   `json:"type"`
-	Roles []string `json:"roles"`
+	Type        string           `json:"type"`
+	Roles       []string         `json:"roles"`
+	KeyLocation string           `json:"keyLocation"`
+	Parameters  AuthAPIKeyConfig `json:"parameters"`
+}
+
+type AuthAPIKeyConfig struct {
+	KeyName    string                 `json:"keyName"`
+	Connection APIKeyConfigConnection `json:"connection"`
+}
+
+type APIKeyConfigConnection struct {
+	Name  string `json:"name"`
+	Query string `json:"query"`
 }
 
 type LoggingDefinition struct {
-	Plugins    []string `json:"plugins"`
-	Enabled    bool     `json:"enabled"`
-	Type       string   `json:"type"`
-	Path       string   `json:"path"`
-	Connection string   `json:"connection"`
-	Level      string   `json:"level"`
+	Enabled    bool   `json:"enabled"`
+	Type       string `json:"type"`
+	Path       string `json:"path"`
+	Connection string `json:"connection"`
+	Level      string `json:"level"`
 }
 
 type CacheDefinition struct {

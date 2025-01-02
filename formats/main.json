@@ -57,6 +57,15 @@
     ],
     "auth": {
       "type": "APIKey", // none, APIKey, OAuth2
+      "keylocation": "header", // or "query" or "body"
+      "peramaeters": {
+        "keyName": "X-API-Key",
+        "connection": {
+          "name": "MyDatabase",
+          "query": "SELECT apiKey FROM users WHERE id = :uuid"
+        }
+      },
+
       "roles": ["admin", "user"] // roles that can access this endpoint 
     },
     "logging": {
