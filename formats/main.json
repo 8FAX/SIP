@@ -69,7 +69,6 @@
       "roles": ["admin", "user"] // roles that can access this endpoint 
     },
     "logging": {
-      "plugins": ["logRequest"],
       "enabled": true,
       "type": "File", // or "Database" or "Console"
         "path": "/var/log/myapp.log", // can be a path or none

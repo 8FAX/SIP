@@ -1,2 +1,4 @@
 format.json
 generated.go
+.env
+/build

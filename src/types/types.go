@@ -56,9 +56,15 @@ type APIKeyConfigConnection struct {
 type LoggingDefinition struct {
 	Enabled    bool   `json:"enabled"`
 	Type       string `json:"type"`
-	Path       string `json:"path"`
 	Connection string `json:"connection"`
 	Level      string `json:"level"`
+}
+
+type LoggingLevels struct {
+	Info  int
+	Debug int
+	Error int
+	Warn  int
 }
 
 type CacheDefinition struct {

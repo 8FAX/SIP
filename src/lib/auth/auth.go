@@ -1,4 +1,4 @@
-package lib
+package auth
 
 import (
 	auth "uilliam.com/sip/lib/auth/gen"
