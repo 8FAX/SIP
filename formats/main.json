@@ -64,9 +64,7 @@
           "name": "MyDatabase",
           "query": "SELECT apiKey FROM users WHERE id = :uuid"
         }
-      },
-
-      "roles": ["admin", "user"] // roles that can access this endpoint 
+      }
     },
     "logging": {
       "enabled": true,
@@ -83,6 +81,7 @@
       "ttl": 300
     },
     "rateLimit": {
+      "enabled": true,
       "limit": 100,
       "timeWindow": 3600
     },

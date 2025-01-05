@@ -75,8 +75,9 @@ type CacheDefinition struct {
 }
 
 type RateLimitDefinition struct {
-	Limit      int `json:"limit"`
-	TimeWindow int `json:"timeWindow"`
+	Enabled    bool `json:"enabled"`
+	Limit      int  `json:"limit"`
+	TimeWindow int  `json:"timeWindow"`
 }
 
 type EndpointConfig struct {
