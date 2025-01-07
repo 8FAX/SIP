@@ -18,6 +18,8 @@ func main() {
 	fmt.Println("=======================================")
 	test.TestLogging()
 	fmt.Println("=======================================")
+	test.TestEntrypoint()
+	fmt.Println("=======================================")
 	fmt.Println("All test done!")
 
 }

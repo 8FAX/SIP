@@ -24,7 +24,7 @@ import (
 // code based on the provided configuration and saves it in the specified directory path.
 func GenerateRateLimitCode(config types.RateLimitDefinition, path string) (string, []string) {
 
-	if config.Enabled == false {
+	if !config.Enabled {
 		snippet := `func checkRateLimit(clientID string) bool {
 	 return true 
 	 }`

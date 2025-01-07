@@ -94,4 +94,17 @@ type EndpointConfig struct {
 	RateLimit   RateLimitDefinition `json:"rateLimit"`
 	Tags        []string            `json:"tags"`
 	Version     string              `json:"version"`
+	Threads     int                 `json:"threads"`
+}
+
+type ConfigDoc struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Version     string `json:"version"`
+	Threads     int    `json:"threds"` // note your JSON says "threds"
+
+	// Potentially you have multiple endpoints:
+	Endpoints map[string]EndpointConfig `json:"-"`
+	// We’ll parse them manually because your JSON lumps some objects under keys like "getUser", "getinfo", etc.
+	// Alternatively, you might define `Endpoints []EndpointSpec` if the JSON is shaped differently.
 }
