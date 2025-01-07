@@ -3,6 +3,13 @@ package types
 // This file holds the definitions of your structs so that they
 // can be imported by both main.go and the lib packages.
 
+// ----------------------------WARNING-----------------------------------------
+// THIS WILL NOT BE USED BY THE GENRATED CODE
+// IF WE NEED CUSTOM TYPES IN THE GENERATED CODE
+// WE WILL ADD A TYPES.GO FILE IN THE GENERATED CODE
+// DO NOT ASSUME YOU WILL BE ABLE TO CALL THIS FILE IN THE GENERATED CODE
+// ----------------------------WARNING-----------------------------------------
+
 type ParamDefinition struct {
 	Type     string `json:"type"`
 	Required bool   `json:"required"`
@@ -98,13 +105,9 @@ type EndpointConfig struct {
 }
 
 type ConfigDoc struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Version     string `json:"version"`
-	Threads     int    `json:"threds"` // note your JSON says "threds"
-
-	// Potentially you have multiple endpoints:
-	Endpoints map[string]EndpointConfig `json:"-"`
-	// We’ll parse them manually because your JSON lumps some objects under keys like "getUser", "getinfo", etc.
-	// Alternatively, you might define `Endpoints []EndpointSpec` if the JSON is shaped differently.
+	Name        string                    `json:"name"`
+	Description string                    `json:"description"`
+	Version     string                    `json:"version"`
+	Threads     int                       `json:"threds"`
+	Endpoints   map[string]EndpointConfig `json:"-"`
 }
