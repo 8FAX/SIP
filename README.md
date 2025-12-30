@@ -1,6 +1,6 @@
 # SIP – Simple Integration Platform
 
-SIP (Simple Integration Platform) is a tool designed to make **backend development and API integration** accessible to everyone—regardless of coding experience. With a straightforward UI, users can **connect** to databases, files, caches, or other APIs, **design** custom endpoints, and **define** how data flows between them. Whether you’re a seasoned developer looking for rapid integration or a newcomer who wants to build simple automation, SIP aims to give you a versatile, no-fuss approach to creating APIs.
+SIP (Simple Integration Platform) is a tool designed to make **backend development and API integration** accessible to everyone, regardless of coding experience. With a straightforward UI, users can **connect** to databases, files, caches, or other APIs, **design** custom endpoints, and **define** how data flows between them. Whether you’re a seasoned developer looking for rapid integration or a newcomer who wants to build simple automation, SIP aims to give you a versatile, no-fuss approach to creating APIs.
 
 ---
 
@@ -22,7 +22,7 @@ SIP (Simple Integration Platform) is a tool designed to make **backend developme
    Secure your endpoints with API keys or other methods, throttle excessive usage, and track who’s making which requests.
 
 6. **Automatic Code Generation**  
-   SIP can create boilerplate code for your endpoints, handling multiple threads or workers for each. You choose how you want to allocate threads per endpoint.
+   SIP can generate boilerplate code for your endpoints, handling multiple threads or workers per endpoint. You choose how you want to allocate threads per endpoint.
 
 ---
 
@@ -70,19 +70,19 @@ Imagine wanting to store files under an API key–protected endpoint:
 
 ## Motivation
 
-Growing up fascinated by game stats (like those from Hypixel or Clash Royale) led to a wish: a **friendly** tool for building APIs—no heavy backend experience required. SIP was built to help:
+Growing up fascinated by game stats (like those from Hypixel or Clash Royale) led me to wish for a **friendly** tool for building APIs, with no heavy backend experience required. SIP was built to help:
 
 - Non-developers, tinkerers, or front-end devs on tight timelines.  
 - Anyone needing a quick prototype or personal project with minimal fuss.  
 - Those who, like a younger me, want to create and share data-driven services and experiments.
 
-SIP is more than just a code generator—it’s a **platform** for building flexible integrations, without being stuck with a one-size-fits-all approach.
+SIP is more than just a code generator; it’s a **platform** for building flexible integrations, without being stuck with a one-size-fits-all approach.
 
 ---
 
 ## Contributing
 
-Contributions are welcome! Check out the issues, open a pull request, or reach out if you have ideas for improving SIP.
+Contributions are welcome! Check out the issues, open a pull request, or reach out with ideas for improving SIP.
 
 ---
 
